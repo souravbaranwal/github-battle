@@ -1,55 +1,58 @@
-import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import React, { Component } from "react";
+import Proptypes from "prop-types";
+import { Columns, Column } from "bloomer";
 
-class SelectLanguage extends Component {
-    
-    render() {
-        const languages = ['All', 'javaScript', 'Ruby', 'CSS', 'Python']
+function SelectLanguage(props) {
+  const languages = ["All", "javaScript","Java", "Ruby", "CSS", "Python"];
 
+  return (
+    <Columns className="languages">
+      {languages.map(language => {
         return (
-            <ul className="languages">
-            {languages.map(language => {
-                return <li
-                style={language === this.props.selectedLanguage ? {color: '#d0021b'}: null}
-                onClick={() => this.props.onSelect( language)}
-                key={language}
-                >{language}</li>
-            })}
-        </ul>
-        )
-    }
+          <Column className='language'
+            style={
+              language === props.selectedLanguage ? { color: "#d0021b" } : null
+            }
+            onClick={() => props.onSelect(language)}
+            key={language}
+          >
+            {language}
+          </Column>
+        );
+      })}
+    </Columns>
+  );
 }
 
 SelectLanguage.propTypes = {
-    selectedLanguage: Proptypes.string.isRequired,
-    onSelect: Proptypes.func.isRequired,
-}
-
+  selectedLanguage: Proptypes.string.isRequired,
+  onSelect: Proptypes.func.isRequired
+};
 
 class Popular extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            selectedLanguage: 'All'
-         };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedLanguage: "All"
+    };
+  }
 
-    updateLanguage = (language) => {
-        this.setState(
-            {
-                selectedLanguage: language
-            }
-        );
-    }
+  updateLanguage = language => {
+    this.setState({
+      selectedLanguage: language
+    });
+  };
 
-    render() {
-
-        return (
-           <div>
-               <SelectLanguage selectedLanguage={this.state.selectedLanguage} onSelect={this.updateLanguage}/>
-           </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <SelectLanguage
+          selectedLanguage={this.state.selectedLanguage}
+          onSelect={this.updateLanguage}
+        />
+      </div>
+    );
+  }
 }
 
 export default Popular;
