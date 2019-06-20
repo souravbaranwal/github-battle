@@ -18,8 +18,73 @@
 
 .nav {
   display: flex;
+  padding: 20px;
 
   li {
-    margin-right: 15px;
+    margin: 0 15px 0 15px;
+    list-style-type: none;
+    font-size: 19px;
   }
 }
+a {
+  text-decoration: none;
+  color: red;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button {
+  color: white;
+  background: skyblue;
+  border: none;
+  font-size: 16px;
+  border-radius: 3px;
+  width: 200px;
+  text-align: center;
+  display: block;
+  padding: 7px 0;
+  margin: 10px auto;
+
+  &:hover {
+    background: rgb(71, 175, 216);
+    text-decoration: none;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+.row {
+  display: flex;
+  justify-content: space-around;
+  .column {
+    display:flex;
+    flex-direction: column;
+    width: 500px;
+    align-items: center;
+    .header {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 200;
+    }
+    input {
+      border-radius: 3px;
+      margin: 10px 0;
+      padding: 5px;
+      border: 1px solid black;
+      font-size: 16px;
+      width: 80%;
+    }
+    label {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 200;
+    }
+  }
+}
+
+
