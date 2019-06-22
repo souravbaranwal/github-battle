@@ -1,58 +1,63 @@
 import React, { Component } from "react";
-import Proptypes from "prop-types";
-import { Columns, Column } from "bloomer";
-
-function SelectLanguage(props) {
-  const languages = ["All", "javaScript","Java", "Ruby", "CSS", "Python"];
-
-  return (
-    <Columns className="languages">
-      {languages.map(language => {
-        return (
-          <Column className='language'
-            style={
-              language === props.selectedLanguage ? { color: "#d0021b" } : null
-            }
-            onClick={() => props.onSelect(language)}
-            key={language}
-          >
-            {language}
-          </Column>
-        );
-      })}
-    </Columns>
-  );
-}
-
-SelectLanguage.propTypes = {
-  selectedLanguage: Proptypes.string.isRequired,
-  onSelect: Proptypes.func.isRequired
-};
-
+import Loading from "./Loading";
+import Menu from "./Menu";
+import '../node_modules/bulma/'
 class Popular extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      selectedLanguage: "All"
+      repos: [],
+      loading: false,
+      lang: "All"
     };
   }
 
-  updateLanguage = language => {
-    this.setState({
-      selectedLanguage: language
-    });
+  componentDidMount = (val = "All") => {
+    this.setState({ loading: true });
+    fetch(
+      `https://api.github.com/search/repositories?q=stars:%3E1+language:${val}&sort=stars&order=desc&type=Repositories`
+    )
+      .then(res => res.json())
+      .then(({ items }) => this.setState({ repos: items, loading: false }));
   };
 
-  render() {
+  handleLinks = val => {
+    this.componentDidMount(val);
+    this.setState({ lang: val });
+  };
+
+  render = () => {
     return (
-      <div>
-        <SelectLanguage
-          selectedLanguage={this.state.selectedLanguage}
-          onSelect={this.updateLanguage}
-        />
+      <div className='is-centered'>
+        <Menu updateSearch={this.handleLinks} />
+
+        <div className='columns is-multiline'>
+          {this.state.loading ? (
+            <Loading />
+          ) : (
+            this.state.repos.map((repo, index) => {
+              return <Repo repoData={repo} rank={index + 1} key={repo.name} />;
+            })
+          )}
+        </div>
       </div>
     );
-  }
+  };
 }
-
+function Repo(props) {
+  const { name, owner } = props.repoData;
+  return (
+    <div>
+      <div className="column">
+        <p>{"#" + props.rank}</p>
+        <h1>{name}</h1>
+        <img
+          src={owner.avatar_url}
+          style={{ width: "150px", borderRadius: "50%", marginTop: "20px" }}
+          alt={"players"}
+        />
+      </div>
+    </div>
+  );
+}
 export default Popular;

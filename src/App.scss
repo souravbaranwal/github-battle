@@ -87,4 +87,14 @@ a {
   }
 }
 
+.menu-parent {
+  text-align: center;
 
+  .column {
+    display: inline;
+  }
+}
+.loader-parent {
+  text-align: center;
+  margin:  0 auto;
+}
