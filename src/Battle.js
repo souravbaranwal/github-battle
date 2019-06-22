@@ -9,24 +9,21 @@ class PlayerInput extends React.Component {
     this.state = {
       username: ""
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = event => {
     var username = event.target.value;
     this.setState(function() {
       return {
-        username: username
+        username: username,
       };
     });
-  }
-  handleSubmit(event) {
+  };
+  handleSubmit = event => {
     event.preventDefault();
 
     this.props.onSubmit(this.props.id, this.state.username);
-  }
+  };
   render() {
     return (
       <form className="column" onSubmit={this.handleSubmit}>
@@ -42,7 +39,7 @@ class PlayerInput extends React.Component {
           autoComplete="off"
         />
         <button
-          className="btn btn--form"
+          className="button is-primary"
           type="submit"
           disabled={!this.state.username}
         >
@@ -115,7 +112,7 @@ class Battle extends Component {
           {playerOneImage !== null && (
             <PlayerPreview avatar={playerOneImage} username={playerOneName}>
               <button
-                className="btn btn--form btn-reset"
+                className="button is-primary"
                 onClick={this.handleReset.bind(null, "playerOne")}
               >
                 Reset
@@ -134,7 +131,7 @@ class Battle extends Component {
           {playerTwoImage !== null && (
             <PlayerPreview avatar={playerTwoImage} username={playerTwoName}>
               <button
-                className="button"
+                className="button is-primary"
                 onClick={this.handleReset.bind(null, "playerTwo")}
               >
                 Reset

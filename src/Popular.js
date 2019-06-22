@@ -28,10 +28,11 @@ class Popular extends Component {
 
   render = () => {
     return (
-      <div className='is-centered'>
+	  <div className='is-c
+	  entered'>
         <Menu updateSearch={this.handleLinks} />
 
-        <div className='columns is-multiline'>
+        <div className='columns is-multiline is-centered repo-parent'>
           {this.state.loading ? (
             <Loading />
           ) : (
@@ -48,9 +49,9 @@ function Repo(props) {
   const { name, owner } = props.repoData;
   return (
     <div>
-      <div className="column">
+      <div className="column avatar-container">
         <p>{"#" + props.rank}</p>
-        <h1>{name}</h1>
+        <h1>{name.charAt(0).toUpperCase() + name.slice(1)}</h1>
         <img
           src={owner.avatar_url}
           style={{ width: "150px", borderRadius: "50%", marginTop: "20px" }}
